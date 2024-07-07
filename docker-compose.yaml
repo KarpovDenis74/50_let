@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:12.4
+    restart: always
+    volumes:
+      - /var/www/eventsmove/postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+
+  web:
+    image: fotokarpov/eventsmove:v1.0
+    restart: always
+    ports:
+      - "127.0.0.1:8001:8002"
+    volumes:
+      - /var/www/eventsmove/static/:/code/static/
+      - /var/www/eventsmove/media/:/code/media/
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    entrypoint: /code/start.sh
