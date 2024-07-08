@@ -1,5 +1,5 @@
 services:
-  db:
+  db_eventsmove:
     image: postgres:12.4
     restart: always
     volumes:
@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
 
-  web:
+  web_eventsmove:
     image: fotokarpov/eventsmove:v1.0
     restart: always
     ports:
@@ -16,7 +16,7 @@ services:
       - /var/www/eventsmove/static/:/code/static/
       - /var/www/eventsmove/media/:/code/media/
     depends_on:
-      - db
+      - db_eventsmove
     env_file:
       - ./.env
     entrypoint: /code/start.sh
