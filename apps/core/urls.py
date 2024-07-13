@@ -1,7 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth import views
+from apps.core.views import index
 
-from apps.core import views
+
+app_name = 'core'
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", index, name="index"),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

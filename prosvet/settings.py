@@ -25,6 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
+    'apps.core',
+    'apps.events',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +45,7 @@ ROOT_URLCONF = 'prosvet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / Path('templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,8 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+AUTH_USER_MODEL = 'core.User'
 
 LANGUAGE_CODE = 'ru'
 TIME_ZONE = 'W-SU'
@@ -109,3 +111,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PROJECT_HOST_NAME = os.getenv('PROJECT_HOST_NAME')
+
+LOGIN_REDIRECT_URL = 'core:index'
