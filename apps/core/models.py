@@ -21,4 +21,6 @@ class User(AbstractUser):
         return f'{self.last_name} {self.first_name} '
 
     class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
         ordering = ['-pk']

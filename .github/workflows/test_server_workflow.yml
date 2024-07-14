@@ -1,4 +1,4 @@
-name: eventsmove workflow
+name: eventsmove
 
 on:
   pull_request:
@@ -68,5 +68,5 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: ${{github.actor}}:\n запустил процесс ${{ github.workflow }}\n - Проект успешно развернут на тестовом сервере!
+        message: ${{github.actor}}: запустил процесс ${{ github.workflow }} Проект успешно развернут http://eventsmove.site !
  
