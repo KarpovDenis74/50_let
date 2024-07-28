@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.signing import Signer
 from django.db import models
 import uuid
+import json
 
 
 class CustomUserManager(UserManager):
@@ -46,7 +47,12 @@ class User(AbstractUser):
         """
         signer = Signer()
         raw_password = signer.unsign_object(self.signer_password)
-        return raw_password
+        try:
+            data_dict = eval(str(raw_password))
+            data = data_dict.get('password')
+        except Exception:
+            data_dict = ''
+        return data
 
     def set_password(self, raw_password):
         """
@@ -56,7 +62,6 @@ class User(AbstractUser):
         """
         signer = Signer()
         self.signer_password = signer.sign(raw_password)
-        print(f'{self.signer_password}')
 
         # устанавливает mda5 хэш пароля
         self.password = make_password(raw_password)
