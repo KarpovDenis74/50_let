@@ -1,9 +1,14 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
-from apps.core.models import User
+User = get_user_model()
 
 
 class Event(models.Model):
+    """
+        События
+        имеют связь с приглашенными на событие пользователями
+    """
     name = models.CharField(max_length=255, verbose_name='Название')
     description = models.CharField(max_length=2000, verbose_name='Описание')
     place = models.CharField(max_length=255)
@@ -26,6 +31,10 @@ class Event(models.Model):
 
 
 class EventGuest(models.Model):
+    """
+        Приглашенные на событие пользователи
+        связь с событием и пользователями
+    """
     event = models.ForeignKey(Event, on_delete=models.PROTECT,
                               verbose_name='Событие')
     guest = models.ForeignKey(User, on_delete=models.PROTECT,
@@ -35,21 +44,29 @@ class EventGuest(models.Model):
         return f'{self.event.name}: {self.guest.full_name} '
 
     class Meta:
-        verbose_name = 'Приглашенные'
-        verbose_name_plural = 'Приглашенные'
+        verbose_name = 'Приглашенный на событие'
+        verbose_name_plural = 'Приглашенные на событие'
         ordering = ['-pk']
 
 
 class SamplePeriod(models.Model):
+    """
+        Модель для хранения периодов выборки в чате телеграмма
+        для конкретного события
+    """
     event = models.ForeignKey(Event, on_delete=models.PROTECT,
                               verbose_name='Событие')
-    start = models.TimeField(verbose_name='Начало выборки')
-    stop = models.TimeField(verbose_name='Окончание выборки')
+    t_start = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Начало выборки в чате телеграмма')
+    t_stop = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Конец выборки в чате телеграмма')
 
     def __str__(self):
-        return f'{self.event.name}: {self.start} - {self.stop} '
+        return f'{self.event.name}: {self.t_start} - {self.t_stop} '
 
     class Meta:
-        verbose_name = 'Событие'
-        verbose_name_plural = 'События'
+        verbose_name = 'Период выборки'
+        verbose_name_plural = 'Периоды выборки'
         ordering = ['-pk']

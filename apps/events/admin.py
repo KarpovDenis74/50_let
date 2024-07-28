@@ -18,8 +18,8 @@ class EventAdmin(admin.ModelAdmin):
 
 
 class SamplePeriodAdmin(admin.ModelAdmin):
-    list_display = ("pk", "event", "start", "stop")
-    search_fields = ("event__name", "start", "stop")
+    list_display = ("pk", "event", "t_start", "t_stop")
+    search_fields = ("event__name", "t_start", "t_stop")
     empty_value_display = "-пусто-"
 
 

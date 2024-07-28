@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'apps.core',
     'apps.events',
+    'apps.bot',
 ]
 
 MIDDLEWARE = [
