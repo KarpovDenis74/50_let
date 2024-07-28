@@ -113,4 +113,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PROJECT_HOST_NAME = os.getenv('PROJECT_HOST_NAME')
 
-LOGIN_REDIRECT_URL = 'core:index'
+LOGIN_REDIRECT_URL = 'events:events'
+LOGOUT_REDIRECT_URL = 'events:events'

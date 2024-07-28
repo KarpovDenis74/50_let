@@ -20,7 +20,7 @@
                   <li><a class="dropdown-item" href="{% url 'core:index' %}">Список регионов</a></li>
                   <li><a class="dropdown-item" href="{% url 'core:index' %}">Список балансовых счетов></a></li>
                 </ul>
-              </li>          
+              </li>
               <li class="nav-item active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                   aria-expanded="false">Банки</a>
@@ -34,10 +34,10 @@
                     ЦБ</a>
                   <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <!--
-                    <li><a class="dropdown-item" href="{% url 'currency:get_currency_for_day' %}">Запросить курсы в ЦБ</a></li>
-                    <li><a class="dropdown-item" href="{% url 'banks:get_regions' %}">Запросить актуальный список регионов в ЦБ</a></li>
-                    <li><a class="dropdown-item" href="{% url 'banks:get_bics' %}">Запросить актуальный список БИКов банков</a></li>
-                    <li><a class="dropdown-item" href="{% url 'banks:get_accounts' %}">Запросить список счетов</a></li>
+                    <li><a class="dropdown-item" href="{% url 'core:index' %}">Запросить курсы в ЦБ</a></li>
+                    <li><a class="dropdown-item" href="{% url 'core:index' %}">Запросить актуальный список регионов в ЦБ</a></li>
+                    <li><a class="dropdown-item" href="{% url 'core:index' %}">Запросить актуальный список БИКов банков</a></li>
+                    <li><a class="dropdown-item" href="{% url 'core:index' %}">Запросить список счетов</a></li>
                     -->
                   </ul>
                 </li>
@@ -59,11 +59,16 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                   {% if request.user.is_authenticated %}
-                    <li><a class="dropdown-item" href="{% url 'core:logout' %}">Выйти</a></li>
-                    <li><a class="dropdown-item" href="{% url 'core:password_change' %}">Сменить пароль</a></li>
+                    <li>
+                      <form action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Log Out</button>
+                      </form>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'password_change' %}">Сменить пароль</a></li>
                     <li><a class="dropdown-item disabled" href="#">Кабинет пользователя</a></li>
                   {% else %}
-                    <li><a class="dropdown-item" href="{% url 'core:login' %}">Войти</a></li>
+                    <li><a class="dropdown-item" href="{% url 'login' %}">Войти</a></li>
                     {% comment %} <li><a class="dropdown-item" href="{% url 'core:signup' %}">Зарегистрироваться</a></li> {% endcomment %}
                   {% endif %}
                 </ul>
@@ -71,12 +76,15 @@
             </ul>
           </div>
         </div>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Log Out</button>
+          </form>
       </div>
     </nav>
-    
-    
-    
-    
-    
+
+
+
+
+
     </header>
-    

@@ -5,9 +5,10 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path("", include("apps.core.urls")),
-    path("events/", include("apps.events.urls")),
+    path("core/", include("apps.core.urls")),
+    path("", include("apps.events.urls")),
     path("admin/", admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:
