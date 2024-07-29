@@ -12,8 +12,8 @@ class Event(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название')
     description = models.CharField(max_length=2000, verbose_name='Описание')
     place = models.CharField(max_length=255)
-    start = models.DateTimeField(verbose_name='Начало события')
-    stop = models.DateTimeField(verbose_name='Окончание события')
+    start = models.DateField(verbose_name='Начало события')
+    stop = models.DateField(verbose_name='Окончание события')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     foto = models.ImageField(upload_to='media/events/', blank=True)
@@ -47,6 +47,10 @@ class EventGuest(models.Model):
         verbose_name = 'Приглашенный на событие'
         verbose_name_plural = 'Приглашенные на событие'
         ordering = ['-pk']
+        constraints = [
+            models.UniqueConstraint(fields=['event', 'guest'],
+                                    name='event_guest_index')
+        ]
 
 
 class SamplePeriod(models.Model):
