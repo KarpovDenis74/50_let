@@ -4,6 +4,9 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
+<a href="{% url 'events:events_detail' event.pk %}">К событию</a>
+
+
 <h1> Приглашенные на событие</h1>
 <h1> {{ event.name }} </h1>
 

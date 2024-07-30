@@ -4,8 +4,21 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.signing import Signer
 from django.db import models
 import uuid
-import json
+import datetime
+from pathlib import Path
 
+def images_avatar_path(instance, filename):
+    """
+        функция возвращает директорию для загрузки логотипа
+        в модель Company
+    """
+    _date = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S.%f')
+    filename = _date + '.' + str(filename.split('.')[-1])
+
+    filename = str(instance.username) + '-' + filename
+    path = Path('avatars/') / Path(filename)
+
+    return str(path)
 
 class CustomUserManager(UserManager):
     """
@@ -33,6 +46,8 @@ class User(AbstractUser):
     foto = models.ImageField(upload_to='media/users/foto/', blank=True)
     signer_password = models.TextField(blank=True, verbose_name='Хэш пароля')
     objects = CustomUserManager()
+    avatar = models.ImageField(upload_to=images_avatar_path, blank=True,
+                               default='avatars/default.webp')
 
     def __str__(self):
         return f'{self.username}: {self.full_name}'

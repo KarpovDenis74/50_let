@@ -1,0 +1,41 @@
+<!-- templates/registration/login.html -->
+{% extends "base.html" %}
+<!-- Загружаем библиотеку для работы со стилями Bootstrap. -->
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<a href="{% url 'events:events_list' %}" >К списку событий</a>
+<form method="post" enctype="multipart/fom-data">
+  {% csrf_token %}
+  <div class="card">
+    <div class="card-header">
+        Создание события
+    </div>
+    <div class="card-body">
+        {{ object.description }}
+    </div>
+    <a href="{% url 'events:guests_list' object.pk %}"><p>Приглашенные:</p></a>
+    {% for guest in guests %}
+    <div class="row">
+        <img  class="col-1" src="{{ guest.avatar.url }}"/>
+
+        <div class="col-6">
+            <p>{{ guest.username }}</p>
+        </div>
+    </div>
+    </br>
+    {% endfor %}
+    <div class="col-2">
+      <a href="{% url 'events:guests_create' object.pk %}"> {% bootstrap_button button_type="button" content="Пригласить гостей" %}</a>
+      </br>
+    </br>
+      <a href="{% url 'events:periods_list' object.pk %}"> {% bootstrap_button button_type="button" content="Периоды выборки фото для события" %}</a>
+    </div>
+  </div>
+</form>
+
+{% with data=request.POST %}
+{% endwith %}
+
+{% endblock %}

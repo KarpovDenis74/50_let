@@ -16,7 +16,7 @@
 
   <div class="col-6">
     <div>
-      {{ obj.name }}
+      <a href="{% url 'events:events_detail' obj.pk %}">{{ obj.name }}</a>
     </div>
     <div>
         {{ obj.description }}
@@ -27,14 +27,7 @@
     <div>
         Окончание события {{ obj.stop }}
     </div>
-    <div>
-        Пришлашенные :
-    {% for guest in obj.guests %}
 
-         {{ obj.stop }}
-
-    {% endfor %}
-  </div>
   </div>
   <div class="col-2">
     <a href="{% url 'events:guests_create' obj.pk %}"> Пригласить гостей</a>

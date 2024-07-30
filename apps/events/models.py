@@ -61,10 +61,10 @@ class SamplePeriod(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT,
                               verbose_name='Событие')
     t_start = models.DateTimeField(
-        auto_now=True,
+
         verbose_name='Начало выборки в чате телеграмма')
     t_stop = models.DateTimeField(
-        auto_now=True,
+        
         verbose_name='Конец выборки в чате телеграмма')
 
     def __str__(self):
