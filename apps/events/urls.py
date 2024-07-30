@@ -1,6 +1,7 @@
 from apps.events.views import (EventDetailView, EventListView, EventCreateView,
                                GuestCreateView, GuestListView, GuestDeleteView,
-                               SamplePeriodListView, SamplePeriodCreateView)
+                               SamplePeriodListView, SamplePeriodCreateView,
+                               SamplePeriodDeleteView)
 
 from django.urls import path
 
@@ -22,4 +23,6 @@ urlpatterns = [
     path("events/<int:event_pk>/periods/create/",
          SamplePeriodCreateView.as_view(),
          name="periods_create"),
+    path("period/<int:pk>/delete/", SamplePeriodDeleteView.as_view(),
+         name="guests_delete"),
 ]

@@ -70,8 +70,8 @@ class GuestCreateView(TempPost, CreateView):
     form_class = EventGuestForm
 
     def get_success_url(self):
-        pk = self.kwargs['event_pk']
-        return reverse('events:guests_list', kwargs={"event_pk": pk})
+        return reverse('events:guests_list',
+                       kwargs={"event_pk": self.kwargs['event_pk']})
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -79,14 +79,12 @@ class GuestCreateView(TempPost, CreateView):
         return form
 
 
-
 class GuestDeleteView(DeleteView):
     model = EventGuest
 
     def get_success_url(self):
-
-        print(f'{self.object.event.pk}')
-        return reverse('events:guests_list', kwargs={"event_pk": self.object.event.pk})
+        return reverse('events:guests_list',
+                       kwargs={"event_pk": self.object.event.pk})
 
 
 class SamplePeriodListView(TempGetContentData, ListView):
@@ -103,8 +101,14 @@ class SamplePeriodCreateView(TempPost, TempGetContentData, CreateView):
     model = SamplePeriod
     form_class = SamplePeriodForm
 
+    def get_success_url(self):
+        return reverse('events:period_list',
+                       kwargs={"event_pk": self.kwargs['event_pk']})
+
+
+class SamplePeriodDeleteView(DeleteView):
+    model = SamplePeriod
 
     def get_success_url(self):
-        pk = self.kwargs['event_pk']
-        return reverse('events:guests_list', kwargs={"event_pk": pk})
-
+        return reverse('events:period_list',
+                       kwargs={"event_pk": self.object.event.pk})
