@@ -41,6 +41,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REDIS_HOST = os.getenv('REDIS_HOST')
+print(f'{REDIS_HOST=}')
+REDIS_PORT = os.getenv('REDIS_PORT')
+
+if DEBUG:
+    # подключаем Redis для локальной машины
+    REDIS_HOST = os.getenv('DEBUG_REDIS_HOST')
+    print(f'{REDIS_HOST=}')
+    REDIS_PORT = os.getenv('DEBUG_REDIS_PORT')
+
 ROOT_URLCONF = 'prosvet.urls'
 
 TEMPLATES = [
@@ -115,3 +125,23 @@ PROJECT_HOST_NAME = os.getenv('PROJECT_HOST_NAME')
 
 LOGIN_REDIRECT_URL = 'events:events'
 LOGOUT_REDIRECT_URL = 'events:events'
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+
+
+# Celery Configuration Options
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCERT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
