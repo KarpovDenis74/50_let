@@ -5,6 +5,9 @@
 
 {% block content %}
 
+<a href="{% url 'events:events_create' %}"> {% bootstrap_button button_type="button" content="Добавить событие" %}</a>
+</br>
+</br>
 {% for obj in page_obj %}
 <div class="row">
 

@@ -24,5 +24,5 @@ urlpatterns = [
          SamplePeriodCreateView.as_view(),
          name="periods_create"),
     path("period/<int:pk>/delete/", SamplePeriodDeleteView.as_view(),
-         name="guests_delete"),
+         name="periods_delete"),
 ]

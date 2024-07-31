@@ -45,7 +45,7 @@ class EventDetailView(DetailView):
 class EventListView(ListView):
     model = Event
     ordering = 'id'
-    paginate_by = 1
+    paginate_by = 5
 
 
 class EventCreateView(CreateView):
@@ -102,7 +102,7 @@ class SamplePeriodCreateView(TempPost, TempGetContentData, CreateView):
     form_class = SamplePeriodForm
 
     def get_success_url(self):
-        return reverse('events:period_list',
+        return reverse('events:periods_list',
                        kwargs={"event_pk": self.kwargs['event_pk']})
 
 
@@ -110,5 +110,5 @@ class SamplePeriodDeleteView(DeleteView):
     model = SamplePeriod
 
     def get_success_url(self):
-        return reverse('events:period_list',
+        return reverse('events:periods_list',
                        kwargs={"event_pk": self.object.event.pk})

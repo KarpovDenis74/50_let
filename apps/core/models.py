@@ -43,7 +43,7 @@ class User(AbstractUser):
                               verbose_name='Telegram nickname')
     t_id = models.CharField(max_length=150, blank=True,
                             verbose_name='Telegram id')
-    foto = models.ImageField(upload_to='media/users/foto/', blank=True)
+    foto = models.ImageField(upload_to='users/foto/', blank=True)
     signer_password = models.TextField(blank=True, verbose_name='Хэш пароля')
     objects = CustomUserManager()
     avatar = models.ImageField(upload_to=images_avatar_path, blank=True,

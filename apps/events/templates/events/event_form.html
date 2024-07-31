@@ -4,6 +4,10 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
+
+<a href="{% url 'events:events_list'  %}"> {% bootstrap_button button_type="button" content="К списку событий" %}</a>
+</br>
+</br>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="card">

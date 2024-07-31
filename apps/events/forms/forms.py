@@ -6,15 +6,17 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class EventForm(forms.ModelForm):
-    start = forms.DateField(
+    start = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
         label='Начало события',
         # Указываем, что виджет для ввода даты должен быть с типом date.
-        widget=forms.DateInput(attrs={'type': 'date',}),
+        widget=forms.DateInput(attrs={'type': 'datetime-local',}),
     )
-    stop = forms.DateField(
+    stop = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
         label='Окончание события',
         # Указываем, что виджет для ввода даты должен быть с типом date.
-        widget=forms.DateInput(attrs={'type': 'date'})
+        widget=forms.DateInput(attrs={'type': 'datetime-local'})
     )
     class Meta:
         model = Event
@@ -29,15 +31,17 @@ class EventGuestForm(forms.ModelForm):
 
 
 class SamplePeriodForm(forms.ModelForm):
-    t_start = forms.DateField(
+    t_start = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
         label='Начало выборки',
         # Указываем, что виджет для ввода даты должен быть с типом date.
-        widget=forms.DateInput(attrs={'type': 'date',}),
+        widget=forms.DateInput(attrs={'type': 'datetime-local',}),
     )
-    t_stop = forms.DateField(
+    t_stop = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
         label='Окончание выборки',
         # Указываем, что виджет для ввода даты должен быть с типом date.
-        widget=forms.DateInput(attrs={'type': 'date'})
+        widget=forms.DateInput(attrs={'type': 'datetime-local'})
     )
     class Meta:
         model = SamplePeriod
