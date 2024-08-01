@@ -1,15 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, ListView, DeleteView, DetailView
-from django.views.generic.base import TemplateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView
 
 from apps.events.forms.forms import EventForm, EventGuestForm, SamplePeriodForm
 from apps.events.models import Event, EventGuest, SamplePeriod
-
 
 User = get_user_model()
 
@@ -32,16 +29,19 @@ class TempPost():
         else:
             return self.form_invalid(form)
 
+
 @method_decorator(login_required, name='dispatch')
 class EventDetailView(DetailView):
     model = Event
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['guests'] = User.objects.filter(eventguest__event=self.kwargs['pk'])
+        context['guests'] = (User.objects
+                             .filter(eventguest__event=self.kwargs['pk']))
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class EventListView(ListView):
     model = Event
     ordering = 'id'
@@ -61,7 +61,8 @@ class GuestListView(TempGetContentData, ListView):
     template_name = 'events/eventguest_list.html'
 
     def get_queryset(self):
-        guest_list = EventGuest.objects.filter(event__pk=self.kwargs['event_pk'])
+        guest_list = (EventGuest.objects
+                      .filter(event__pk=self.kwargs['event_pk']))
         return guest_list
 
 
@@ -75,7 +76,9 @@ class GuestCreateView(TempPost, CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields['guest'].queryset = User.objects.exclude(eventguest__event=self.kwargs['event_pk'])
+        form.fields['guest'].queryset = (
+            User.objects.exclude(eventguest__event=self.kwargs['event_pk'])
+        )
         return form
 
 
@@ -93,7 +96,9 @@ class SamplePeriodListView(TempGetContentData, ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        period_list = SamplePeriod.objects.filter(event=self.kwargs['event_pk'])
+        period_list = (
+            SamplePeriod.objects.filter(event=self.kwargs['event_pk'])
+        )
         return period_list
 
 

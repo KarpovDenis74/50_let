@@ -7,6 +7,7 @@ import uuid
 import datetime
 from pathlib import Path
 
+
 def images_avatar_path(instance, filename):
     """
         функция возвращает директорию для загрузки логотипа
@@ -19,6 +20,7 @@ def images_avatar_path(instance, filename):
     path = Path('avatars/') / Path(filename)
 
     return str(path)
+
 
 class CustomUserManager(UserManager):
     """

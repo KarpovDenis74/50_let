@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.events',
     'apps.bot',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -123,8 +124,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 PROJECT_HOST_NAME = os.getenv('PROJECT_HOST_NAME')
 
-LOGIN_REDIRECT_URL = 'events:events'
-LOGOUT_REDIRECT_URL = 'events:events'
+LOGIN_REDIRECT_URL = 'events:events_list'
+LOGOUT_REDIRECT_URL = 'events:events_list'
 
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -9,7 +9,8 @@ from django.urls import path
 app_name = 'events'
 
 urlpatterns = [
-    path("events/<int:pk>/detail/", EventDetailView.as_view(), name="events_detail"),
+    path("events/<int:pk>/detail/", EventDetailView.as_view(),
+         name="events_detail"),
     path("", EventListView.as_view(), name="events_list"),
     path("events/create/", EventCreateView.as_view(), name="events_create"),
     path("events/<int:event_pk>/guests/create/", GuestCreateView.as_view(),

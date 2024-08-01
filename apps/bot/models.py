@@ -27,6 +27,3 @@ class GroupBot(models.Model):
         verbose_name = 'Телеграмм бот'
         verbose_name_plural = 'Телеграмм боты'
         ordering = ['-pk']
-
-
-

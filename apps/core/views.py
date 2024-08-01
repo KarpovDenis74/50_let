@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.contrib.auth.views import LoginView
+from apps.core.forms import NewAuthenticationForm
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+class NewLoginView(LoginView):
+    form_class = NewAuthenticationForm

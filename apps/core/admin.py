@@ -19,4 +19,5 @@ class UserAdmin(admin.ModelAdmin):
     def get_password(self, obj):
         return obj.password_from_hash()
 
+
 admin.site.register(User, UserAdmin)
