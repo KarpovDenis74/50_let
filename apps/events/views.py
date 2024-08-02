@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DeleteView, DetailView, ListView
 
-from apps.events.forms.forms import EventForm, EventGuestForm, SamplePeriodForm
+from apps.events.forms import EventForm, EventGuestForm, SamplePeriodForm
 from apps.events.models import Event, EventGuest, SamplePeriod
 
 User = get_user_model()
@@ -48,12 +48,14 @@ class EventListView(ListView):
     paginate_by = 5
 
 
+@method_decorator(login_required, name='dispatch')
 class EventCreateView(CreateView):
     model = Event
     form_class = EventForm
     success_url = reverse_lazy('events:events_list')
 
 
+@method_decorator(login_required, name='dispatch')
 class GuestListView(TempGetContentData, ListView):
     model = EventGuest
     ordering = 'id'
@@ -66,6 +68,7 @@ class GuestListView(TempGetContentData, ListView):
         return guest_list
 
 
+@method_decorator(login_required, name='dispatch')
 class GuestCreateView(TempPost, CreateView):
     model = EventGuest
     form_class = EventGuestForm
@@ -82,6 +85,7 @@ class GuestCreateView(TempPost, CreateView):
         return form
 
 
+@method_decorator(login_required, name='dispatch')
 class GuestDeleteView(DeleteView):
     model = EventGuest
 
@@ -90,6 +94,7 @@ class GuestDeleteView(DeleteView):
                        kwargs={"event_pk": self.object.event.pk})
 
 
+@method_decorator(login_required, name='dispatch')
 class SamplePeriodListView(TempGetContentData, ListView):
     model = SamplePeriod
     ordering = 'id'
@@ -102,6 +107,7 @@ class SamplePeriodListView(TempGetContentData, ListView):
         return period_list
 
 
+@method_decorator(login_required, name='dispatch')
 class SamplePeriodCreateView(TempPost, TempGetContentData, CreateView):
     model = SamplePeriod
     form_class = SamplePeriodForm
@@ -111,6 +117,7 @@ class SamplePeriodCreateView(TempPost, TempGetContentData, CreateView):
                        kwargs={"event_pk": self.kwargs['event_pk']})
 
 
+@method_decorator(login_required, name='dispatch')
 class SamplePeriodDeleteView(DeleteView):
     model = SamplePeriod
 

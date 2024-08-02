@@ -1,0 +1,29 @@
+±!-- еуьздфеуы/купшыекфешщт/дщпштюреьд --§
+<!-- templates/registration/login.html -->
+{% extends "base.html" %}
+<!-- Загружаем библиотеку для работы со стилями Bootstrap. -->
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+<a href="{% url 'events:events_list' %}" >К списку событий</a>
+<form method="post" enctype="multipart/fom-data">
+  {% csrf_token %}
+  <div class="card">
+    <div class="card-header">
+        Бот {{ object.name }}
+    </div>
+    <div class="card-body">
+        {{ object.description }}
+    </div>
+    <div class="col-2">
+    </br>
+      <a href="{% url 'events:periods_list' object.pk %}"> {% bootstrap_button button_type="button" content="Список ботов" %}</a>
+    </div>
+  </div>
+</form>
+
+{% with data=request.POST %}
+{% endwith %}
+
+{% endblock %}

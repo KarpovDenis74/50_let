@@ -6,6 +6,7 @@ from apps.core.views import NewLoginView
 
 
 urlpatterns = [
+    path("bot/", include("apps.bot.urls")),
     path("core/", include("apps.core.urls")),
     path("", include("apps.events.urls")),
     path("admin/", admin.site.urls),
