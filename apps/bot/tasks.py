@@ -9,18 +9,26 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from asgiref.sync import sync_to_async
 from celery import shared_task
-from apps.bot.handers import register_handlers
+from apps.bot.handlers import router
+from concurrent.futures import ThreadPoolExecutor
+
+
+async def get_group_bot(bot_id: int):
+    from apps.bot.models import GroupBot
+    loop = asyncio.get_event_loop()
+    with ThreadPoolExecutor() as pool:
+        return await loop.run_in_executor(pool, lambda: GroupBot.objects.get(pk=bot_id))
 
 
 async def _start_bot(bot_id: int) -> None:
     from apps.bot.models import GroupBot
-    group_bot = await sync_to_async(GroupBot.objects.get)(pk=bot_id)
+    group_bot = await get_group_bot(bot_id)
 
     bot_token = group_bot.token
     bot_name = group_bot.name
     dp = Dispatcher()
 
-    register_handlers(dp)
+    dp.include_router(router)
     bot = Bot(token=bot_token,
               default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     # And the run events dispatching
@@ -36,11 +44,9 @@ def start_bot(bot_id: int):
 
 @shared_task
 async def stop_bot(bot_id):
-    from apps.bot.models import GroupBot
-    group_bot = await sync_to_async(GroupBot.objects.get)(pk=bot_id)
-
+    group_bot = await get_group_bot(bot_id)
     bot_token = group_bot.token
     dp = Dispatcher()
     bot = Bot(token=bot_token,
               default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-    await dp.stop_polling(bot, polling_timeout=20,)
+    await dp.stop_polling()

@@ -30,11 +30,20 @@ class GroupBot(models.Model):
         if new_bot:
             super().save(force_insert, force_update, using, update_fields)
             start_bot.delay_on_commit(self.pk)
+            return None
         else:
             current_bot_active = GroupBot.objects.get(pk=self.pk).active
+            print(f'{current_bot_active=}')
             if not current_bot_active and self.active:
+                print('Здесь')
                 super().save(force_insert, force_update, using, update_fields)
                 start_bot.delay_on_commit(self.pk)
+                return None
+            elif current_bot_active and not self.active:
+                print('Здесь 2')
+                stop_bot.delay_on_commit(self.pk)
+                super().save(force_insert, force_update, using, update_fields)
+                return None
         super().save(force_insert, force_update, using, update_fields)
 
     class Meta:
