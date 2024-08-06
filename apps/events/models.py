@@ -16,10 +16,11 @@ class Event(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT,
                                verbose_name='Автор события',
                                related_name='author_event')
-    bot = models.ForeignKey(GroupBot, on_delete=models.PROTECT,
-                            verbose_name='Телеграмм бот, обслуживающий событие',
-                            related_name='event',
-                            null=True)
+    bot = models.ForeignKey(
+        GroupBot, on_delete=models.PROTECT,
+        verbose_name='Телеграмм бот, обслуживающий событие',
+        related_name='event',
+        null=True)
     place = models.CharField(max_length=255)
     start = models.DateTimeField(verbose_name='Начало события')
     stop = models.DateTimeField(verbose_name='Окончание события')

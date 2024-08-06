@@ -43,13 +43,11 @@ MIDDLEWARE = [
 ]
 
 REDIS_HOST = os.getenv('REDIS_HOST')
-print(f'{REDIS_HOST=}')
 REDIS_PORT = os.getenv('REDIS_PORT')
 
 if DEBUG:
     # подключаем Redis для локальной машины
     REDIS_HOST = os.getenv('DEBUG_REDIS_HOST')
-    print(f'{REDIS_HOST=}')
     REDIS_PORT = os.getenv('DEBUG_REDIS_PORT')
 
 ROOT_URLCONF = 'prosvet.urls'
