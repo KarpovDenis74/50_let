@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from apps.bot.tasks import start_bot, stop_bot
+from apps.bot.tasks import start_bot
+
 
 User = get_user_model()
 

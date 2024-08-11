@@ -1,7 +1,7 @@
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
-from aiogram import Dispatcher, Router
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 from asgiref.sync import sync_to_async
