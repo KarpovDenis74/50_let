@@ -1,6 +1,9 @@
 # Project
 .env
-/media
+media/avatars/*
+media/events/*
+media/users/*
+media/media/*
 
 
 # Byte-compiled / optimized / DLL files

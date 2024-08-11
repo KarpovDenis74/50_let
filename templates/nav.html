@@ -2,7 +2,7 @@
     <nav class="navbar navbar-lg navbar-light">
       <div class="nav__container container navbar navbar-expand-md">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'core:index' %}">Аналитика</a>
+          <a class="navbar-brand" href="{% url 'events:events_list' %}">Аналитика</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
             aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,22 +10,20 @@
           <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
               <li class="nav-item active">
-                <a class="nav-link" aria-current="page" href="{% url 'core:index' %}">Главная</a>
+                <a class="nav-link" aria-current="page" href="{% url 'events:events_list' %}">Главная</a>
               </li>
               <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-expanded="false">Справочники</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                  <li><a class="dropdown-item" href="{% url 'core:index' %}">Курсы</a></li>
-                  <li><a class="dropdown-item" href="{% url 'core:index'%}">Список банков</a></li>
-                  <li><a class="dropdown-item" href="{% url 'core:index' %}">Список регионов</a></li>
-                  <li><a class="dropdown-item" href="{% url 'core:index' %}">Список балансовых счетов></a></li>
+                  <li><a class="dropdown-item" href="{% url 'events:events_list'%}">События</a></li>
+                  <li><a class="dropdown-item" href="{% url 'bot:bot_list' %}">Боты, обслуживающие события</a></li>
                 </ul>
-              </li>          
+              </li>
               <li class="nav-item active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                   aria-expanded="false">Банки</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                  <li><a class="dropdown-item" href="{% url 'core:index' %}">Список </a></li>
+                  <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Список </a></li>
                 </ul>
               </li>
               {% if user.is_staff %}
@@ -34,10 +32,10 @@
                     ЦБ</a>
                   <ul class="dropdown-menu" aria-labelledby="dropdown04">
                     <!--
-                    <li><a class="dropdown-item" href="{% url 'currency:get_currency_for_day' %}">Запросить курсы в ЦБ</a></li>
-                    <li><a class="dropdown-item" href="{% url 'banks:get_regions' %}">Запросить актуальный список регионов в ЦБ</a></li>
-                    <li><a class="dropdown-item" href="{% url 'banks:get_bics' %}">Запросить актуальный список БИКов банков</a></li>
-                    <li><a class="dropdown-item" href="{% url 'banks:get_accounts' %}">Запросить список счетов</a></li>
+                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить курсы в ЦБ</a></li>
+                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить актуальный список регионов в ЦБ</a></li>
+                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить актуальный список БИКов банков</a></li>
+                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить список счетов</a></li>
                     -->
                   </ul>
                 </li>
@@ -59,11 +57,16 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                   {% if request.user.is_authenticated %}
-                    <li><a class="dropdown-item" href="{% url 'core:logout' %}">Выйти</a></li>
-                    <li><a class="dropdown-item" href="{% url 'core:password_change' %}">Сменить пароль</a></li>
+                    <li>
+                      <form action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Log Out</button>
+                      </form>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'password_change' %}">Сменить пароль</a></li>
                     <li><a class="dropdown-item disabled" href="#">Кабинет пользователя</a></li>
                   {% else %}
-                    <li><a class="dropdown-item" href="{% url 'core:login' %}">Войти</a></li>
+                    <li><a class="dropdown-item" href="{% url 'login' %}">Войти</a></li>
                     {% comment %} <li><a class="dropdown-item" href="{% url 'core:signup' %}">Зарегистрироваться</a></li> {% endcomment %}
                   {% endif %}
                 </ul>
@@ -71,12 +74,15 @@
             </ul>
           </div>
         </div>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Log Out</button>
+          </form>
       </div>
     </nav>
-    
-    
-    
-    
-    
+
+
+
+
+
     </header>
-    

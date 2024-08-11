@@ -2,12 +2,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from apps.core.views import NewLoginView
 
 
 urlpatterns = [
-    path("", include("apps.core.urls")),
-    path("events/", include("apps.events.urls")),
+    path("bot/", include("apps.bot.urls")),
+    path("core/", include("apps.core.urls")),
+    path("", include("apps.events.urls")),
     path("admin/", admin.site.urls),
+    path("accounts/login/", NewLoginView.as_view(), name="login"),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 if settings.DEBUG:

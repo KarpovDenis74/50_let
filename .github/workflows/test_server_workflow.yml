@@ -1,4 +1,4 @@
-name: eventsmove workflow
+name: eventsmove
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.11
@@ -46,7 +46,7 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
-    steps:   
+    steps:
     - name: executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
@@ -68,5 +68,4 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: ${{github.actor}}:\n запустил процесс ${{ github.workflow }}\n - Проект успешно развернут на тестовом сервере!
- 
+        message: ${{github.actor}}:\n запустил процесс ${{github.workflow}}\n - Проект успешно развернут на сервере!
