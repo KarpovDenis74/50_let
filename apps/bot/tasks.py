@@ -8,7 +8,7 @@ from celery import shared_task
 
 from apps.bot.handlers import router
 
-from asgiref.sync import sync_to_async
+# from asgiref.sync import sync_to_async
 
 
 async def get_group_bot(bot_id: int):

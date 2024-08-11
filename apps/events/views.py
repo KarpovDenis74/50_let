@@ -1,13 +1,11 @@
-from aiogram import Bot, Dispatcher
+from aiogram import Bot
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.db.models.query import QuerySet
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  TemplateView, View)
-from django.views.generic.list import MultipleObjectMixin
+                                  TemplateView)
 
 from apps.bot.models import GroupBot
 from apps.events.forms import EventForm, EventGuestForm, SamplePeriodForm
@@ -142,12 +140,13 @@ class FotoView(TemplateView):
         chat_id = group_bot.group_id
 
         bot = Bot(token=bot_token)
-        dp = Dispatcher()
+        # dp = Dispatcher()
 
         end_date = datetime.datetime.now()
         start_date = end_date - datetime.timedelta(days=7)
 
-        photos = asyncio.run(self.fetch_photos(bot, start_date, end_date, chat_id))
+        photos = asyncio.run(self.fetch_photos(bot, start_date, end_date,
+                                               chat_id))
 
         return photos
 
@@ -160,10 +159,12 @@ class FotoView(TemplateView):
         photos = []
 
         async for message in bot.get_chat_history(chat_id, limit=100):
-            if message.date >= start_date and message.date <= end_date and message.photo:
+            if (message.date >= start_date and message.date <= end_date
+                    and message.photo):
                 for photo in message.photo:
                     file_id = photo.file_id
                     file = await bot.get_file(file_id)
-                    file_url = f'https://api.telegram.org/file/bot{bot.token}/{file.file_path}'
+                    file_url = (f'https://api.telegram.org/file/bot{bot.token}'
+                                f'/{file.file_path}')
                     photos.append(file_url)
         return photos
