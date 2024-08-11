@@ -42,26 +42,26 @@ def start_bot(bot_id: int):
     # asyncio.run(_start_bot(bot_id))
 
 
-async def _stop_bot(bot_id: int) -> None:
-    group_bot = await get_group_bot(bot_id)
-    bot_token = group_bot.token
+# async def _stop_bot(bot_id: int) -> None:
+#     group_bot = await get_group_bot(bot_id)
+#     bot_token = group_bot.token
 
-    loop = asyncio.get_event_loop()
-    print(f'{loop=}')
-    for task in asyncio.all_tasks(loop):
-        task.cancel()
-    loop.stop()
+#     loop = asyncio.get_event_loop()
+#     print(f'{loop=}')
+#     for task in asyncio.all_tasks(loop):
+#         task.cancel()
+#     loop.stop()
 
 
-@shared_task
-def stop_bot(bot_id) -> None:
-    # loop = asyncio.get_event_loop()
-    # loop.run_until_complete(_stop_bot(bot_id))
-    # group_bot = await get_group_bot(bot_id)
-    # bot_token = group_bot.token
+# @shared_task
+# def stop_bot(bot_id) -> None:
+#     # loop = asyncio.get_event_loop()
+#     # loop.run_until_complete(_stop_bot(bot_id))
+#     # group_bot = await get_group_bot(bot_id)
+#     # bot_token = group_bot.token
 
-    loop = asyncio.get_event_loop()
-    sync_to_async(print(f'{loop=}'))
-    for task in asyncio.all_tasks(loop):
-        task.cancel()
-    loop.stop()
+#     loop = asyncio.get_event_loop()
+#     sync_to_async(print(f'{loop=}'))
+#     for task in asyncio.all_tasks(loop):
+#         task.cancel()
+#     loop.stop()
