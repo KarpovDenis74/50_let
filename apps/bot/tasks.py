@@ -31,7 +31,7 @@ async def _start_bot(bot_id: int) -> None:
     bot = Bot(token=bot_token,
               default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     # And the run events dispatching
-    await dp.start_polling(bot, polling_timeout=20,)
+    await dp.start_polling(bot, polling_timeout=21,)
 
 
 @shared_task
