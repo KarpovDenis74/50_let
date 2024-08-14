@@ -34,4 +34,5 @@ async def send_welcome(message: Message):
 @router.message(lambda message: message.text is not None)
 async def echo(message: Message):
     answer = await sync_to_async(b)(message.chat.id, message.text)
-    await message.answer(answer)
+    await message.reply(text=answer, parse_mode='markdown',
+                        disable_web_page_preview=True)
