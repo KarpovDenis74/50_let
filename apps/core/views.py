@@ -1,8 +1,9 @@
-from django.contrib.auth.views import LoginView
-from apps.core.forms import NewAuthenticationForm, CustomUserCreationForm
-from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+
+from apps.core.forms import CustomUserCreationForm, NewAuthenticationForm
 
 User = get_user_model()
 
