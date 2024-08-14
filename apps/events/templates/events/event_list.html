@@ -1,47 +1,53 @@
-<!-- templates/registration/login.html -->
 {% extends "base.html" %}
 <!-- Загружаем библиотеку для работы со стилями Bootstrap. -->
 {% load django_bootstrap5 %}
+
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'events/css/style.css' %}">
+{% endblock %}
 
 {% block content %}
 
 <a href="{% url 'events:events_create' %}"> {% bootstrap_button button_type="button" content="Добавить событие" %}</a>
 </br>
 </br>
-{% for obj in page_obj %}
-<div class="row">
+<div class="events">
+  {% for obj in page_obj %}
+  <div class="event">
 
-  <div class="col-2">
-    {% if obj.foto %}
-      <img src="{{ obj.foto.url }}" height=100>
+    <div class="event__detail">
+      {% if obj.foto %}
+        <img src="{{ obj.foto.url }}" class="event__detail__img">
+      {% endif %}
+    </div>
+
+    <div class="event__fields">
+      <div>
+        <a href="{% url 'events:events_detail' obj.pk %}">{{ obj.name }}</a>
+      </div>
+      <div>
+          {{ obj.description }}
+      </div>
+      <div>
+          Начало события {{ obj.start }}
+      </div>
+      <div>
+          Окончание события {{ obj.stop }}
+      </div>
+
+    </div>
+    <div class="event__link">
+      <a href="{% url 'events:guests_create' obj.pk %}"> Пригласить гостей</a>
+    </div>
+
+    {% if not forloop.last %}
+      <hr class="mt-3">
     {% endif %}
   </div>
-
-  <div class="col-6">
-    <div>
-      <a href="{% url 'events:events_detail' obj.pk %}">{{ obj.name }}</a>
-    </div>
-    <div>
-        {{ obj.description }}
-    </div>
-    <div>
-        Начало события {{ obj.start }}
-    </div>
-    <div>
-        Окончание события {{ obj.stop }}
-    </div>
-
-  </div>
-  <div class="col-2">
-    <a href="{% url 'events:guests_create' obj.pk %}"> Пригласить гостей</a>
-  </div>
-
-  {% if not forloop.last %}
-    <hr class="mt-3">
-  {% endif %}
+  {% endfor %}
 </div>
-{% endfor %}
-
 <!-- Подключаем пагинатор -->
 {% include "paginator.html" %}
 {% endblock %}
