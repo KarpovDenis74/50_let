@@ -64,12 +64,14 @@ class User(AbstractUser):
         """
         signer = Signer()
         raw_password = signer.unsign_object(self.signer_password)
+        print(f'{type(raw_password)=}, {raw_password=}')
         try:
-            data_dict = eval(str(raw_password))
-            data = data_dict.get('password')
+            # data_dict = eval(str(raw_password))
+            data = raw_password.get('password')
         except Exception:
-            data_dict = ''
-        return data
+            data = ''
+        print(f'{data=}')
+        return str(data)
 
     def set_password(self, raw_password):
         """
@@ -78,7 +80,7 @@ class User(AbstractUser):
             и password
         """
         signer = Signer()
-        self.signer_password = signer.sign(raw_password)
+        self.signer_password = signer.sign_object({'password': raw_password})
 
         # устанавливает mda5 хэш пароля
         self.password = make_password(raw_password)
