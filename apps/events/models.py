@@ -26,7 +26,7 @@ class Event(models.Model):
     stop = models.DateTimeField(verbose_name='Окончание события')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    foto = models.ImageField(upload_to='media/events/', blank=True)
+    foto = models.ImageField(upload_to='events/', blank=True)
     guest = models.ManyToManyField(User, blank=True,
                                    related_name='guest_event',
                                    through="EventGuest",
@@ -34,7 +34,7 @@ class Event(models.Model):
                                    verbose_name='Участвники события',)
 
     def __str__(self):
-        return self.name
+        return self.nam
 
     class Meta:
         verbose_name = 'Событие'

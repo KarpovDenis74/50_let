@@ -47,17 +47,21 @@ class YangexGPT():
             answer = json.loads(response.text)
             print(f'{answer=}')
             id = answer["id"]
+            count = 0
             while not answer['done']:
+                if count > 10:
+                    return 'Не могу ответить на ваш вопрос :('
                 headers = {'Authorization': f'Bearer {iam_token}'}
                 response = requests.get(
                     f'https://llm.api.cloud.yandex.net/operations/{id}',
                     headers=headers
                 )
                 answer = json.loads(response.text)
-                sleep(3)
+                sleep(10)
+                count += 1
                 print(f'{      type(answer)=}')
         else:
-            return ''
+            return 'Не могу ответить на ваш вопрос :('
         print(f'{           type(answer)=}')
         print(f'{           answer=}')
         return answer['response']['alternatives'][0]['message']['text']

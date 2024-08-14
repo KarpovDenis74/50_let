@@ -1,8 +1,8 @@
-<header class="header">
+<header class="header header__color">
     <nav class="navbar navbar-lg navbar-light">
       <div class="nav__container container navbar navbar-expand-md">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'events:events_list' %}">Аналитика</a>
+          <a class="navbar-brand" href="{% url 'events:events_list' %}">События</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
             aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,40 +10,19 @@
           <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
               <li class="nav-item active">
-                <a class="nav-link" aria-current="page" href="{% url 'events:events_list' %}">Главная</a>
+                <a class="nav-link" aria-current="page" href="{% url 'events:events_list' %}">Они двигают жизнь</a>
               </li>
               <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-expanded="false">Справочники</a>
+                <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-expanded="false">Ссылки</a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown04">
                   <li><a class="dropdown-item" href="{% url 'events:events_list'%}">События</a></li>
+                  {% if user.is_staff %}
                   <li><a class="dropdown-item" href="{% url 'bot:bot_list' %}">Боты, обслуживающие события</a></li>
+                  {% endif %}
                 </ul>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
-                  aria-expanded="false">Банки</a>
-                <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                  <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Список </a></li>
-                </ul>
-              </li>
-              {% if user.is_staff %}
-                <li class="nav-item dropdown active">
-                  <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-expanded="false">Запросы в
-                    ЦБ</a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdown04">
-                    <!--
-                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить курсы в ЦБ</a></li>
-                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить актуальный список регионов в ЦБ</a></li>
-                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить актуальный список БИКов банков</a></li>
-                    <li><a class="dropdown-item" href="{% url 'events:events_list' %}">Запросить список счетов</a></li>
-                    -->
-                  </ul>
-                </li>
-              {% endif %}
             </ul>
-            <form>
-              <input class="form-control disabled" type="text" placeholder="Поиск" aria-label="Search">
-            </form>
+
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-expanded="false">
@@ -74,10 +53,7 @@
             </ul>
           </div>
         </div>
-        <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button type="submit">Log Out</button>
-          </form>
+
       </div>
     </nav>
 

@@ -18,15 +18,17 @@
   <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}" />
   <link rel="stylesheet" href="{% static 'styles/variables.css' %}" />
   <link rel="stylesheet" href="{% static 'styles/globals.css' %}" />
-  <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
   <link rel="stylesheet" href="{% static 'styles/animations.css' %}" />
   <link rel="stylesheet" href="{% static 'styles/themes.css' %}" />
   {% block css %}{% endblock %}
 </head>
 
-<body>
+<body class="page_base">
     {% include 'nav.html' %}
-    <div class="main container">
+    <div class="main">
       {% block content %}
       <!-- Содержимое страницы -->
       {% endblock %}

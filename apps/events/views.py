@@ -59,6 +59,11 @@ class EventCreateView(CreateView):
     form_class = EventForm
     success_url = reverse_lazy('events:events_list')
 
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        return super().form_valid(form)
+
 
 @method_decorator(login_required, name='dispatch')
 class GuestListView(TempGetContentData, ListView):
