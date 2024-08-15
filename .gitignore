@@ -4,8 +4,9 @@ media/avatars/*
 media/events/*
 media/users/*
 media/media/*
+media/temp/*
 
-
+*.session
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

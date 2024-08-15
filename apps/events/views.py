@@ -1,4 +1,5 @@
-from aiogram import Bot
+import asyncio
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
@@ -10,8 +11,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from apps.bot.models import GroupBot
 from apps.events.forms import EventForm, EventGuestForm, SamplePeriodForm
 from apps.events.models import Event, EventGuest, SamplePeriod
-import asyncio
-import datetime
+from apps.events.utils.foto import TUtils
 
 User = get_user_model()
 
@@ -140,36 +140,20 @@ class FotoView(TemplateView):
     template_name = "events/event_foto_list.html"
 
     def _get_foto(self):
-        group_bot = GroupBot.objects.get(pk=1)
-        bot_token = group_bot.token
-        chat_id = group_bot.group_id
+        bot = GroupBot.objects.get(pk=1)
+        history = TUtils(bot)
 
-        bot = Bot(token=bot_token)
-        # dp = Dispatcher()
+        async def get_history():
+            return await history.get_history()
 
-        end_date = datetime.datetime.now()
-        start_date = end_date - datetime.timedelta(days=7)
-
-        photos = asyncio.run(self.fetch_photos(bot, start_date, end_date,
-                                               chat_id))
-
-        return photos
+        fotos = asyncio.run(get_history())
+        # messages = history.get_history()
+        # end_date = datetime.datetime.now()
+        # start_date = end_date - datetime.timedelta(days=7)
+        print(f'{fotos=}')
+        return fotos
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_obj'] = self._get_foto()
         return context
-
-    async def fetch_photos(self, bot: Bot, start_date, end_date, chat_id):
-        photos = []
-
-        async for message in bot.get_chat_history(chat_id, limit=100):
-            if (message.date >= start_date and message.date <= end_date
-                    and message.photo):
-                for photo in message.photo:
-                    file_id = photo.file_id
-                    file = await bot.get_file(file_id)
-                    file_url = (f'https://api.telegram.org/file/bot{bot.token}'
-                                f'/{file.file_path}')
-                    photos.append(file_url)
-        return photos

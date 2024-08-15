@@ -131,6 +131,9 @@ PROJECT_HOST_NAME = os.getenv('PROJECT_HOST_NAME')
 LOGIN_REDIRECT_URL = 'events:events_list'
 LOGOUT_REDIRECT_URL = 'events:events_list'
 
+API_ID = os.getenv('tapi_tid')
+API_HASH = os.getenv('tpi_tash')
+print(f'{API_ID=}, {API_HASH=}')
 # Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')

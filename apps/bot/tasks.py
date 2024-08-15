@@ -8,6 +8,8 @@ from celery import shared_task
 
 from apps.bot.handlers import router
 
+from celery.exceptions import SoftTimeLimitExceeded, TimeLimitExceeded
+
 # from asgiref.sync import sync_to_async
 
 
@@ -34,12 +36,14 @@ async def _start_bot(bot_id: int) -> None:
     await dp.start_polling(bot, polling_timeout=21)
 
 
-@shared_task
+@shared_task(autoretry_for=(Exception, SoftTimeLimitExceeded,
+                            TimeLimitExceeded),
+             task_soft_time_limit=600)
 def start_bot(bot_id: int):
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(_start_bot(bot_id))
+    # loop = asyncio.get_event_loop()
+    # loop.run_until_complete(_start_bot(bot_id))
 
-    # asyncio.run(_start_bot(bot_id))
+    asyncio.run(_start_bot(bot_id))
 
 
 # async def _stop_bot(bot_id: int) -> None:
