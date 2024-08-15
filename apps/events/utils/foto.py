@@ -5,7 +5,7 @@ from telethon.tl.types import InputMessagesFilterPhotos
 
 class TUtils:
     TG_SESSION_NAME = 'SESSION1'
-    client = TelegramClient(TG_SESSION_NAME, settings.API_ID,
+    client = TelegramClient(f'media/{TG_SESSION_NAME}', settings.API_ID,
                             settings.API_HASH)
 
     def __init__(self, bot):
