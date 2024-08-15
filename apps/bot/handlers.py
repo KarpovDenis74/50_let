@@ -13,9 +13,13 @@ router = Router()
 
 def b(bot_chat_id, question):
     from apps.bot.models import GroupBot
-    assistant = GroupBot.objects.filter(group_id=bot_chat_id).first().assistant
-    a = AssistantUtils(assistant)
-    return a.get_answer(question)
+    bot = GroupBot.objects.filter(group_id=bot_chat_id).first()
+    assistant = bot.assistant
+    if question.lower().startswith(bot.name.lower()):
+        a = AssistantUtils(assistant)
+        return a.get_answer(question)
+    else:
+        return None
 
 
 async def get_group_bot(bot_chat_id, question):
@@ -34,5 +38,7 @@ async def send_welcome(message: Message):
 @router.message(lambda message: message.text is not None)
 async def echo(message: Message):
     answer = await sync_to_async(b)(message.chat.id, message.text)
-    await message.reply(text=answer, parse_mode='markdown',
-                        disable_web_page_preview=True)
+    print(f'{answer=}')
+    if answer is not None:
+        await message.reply(text=answer, parse_mode='markdown',
+                            disable_web_page_preview=True)
